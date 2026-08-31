@@ -1557,6 +1557,13 @@
                         </div>
                     </div>
 
+        <!-- ===== 卡牌列表底部新增按钮 ===== -->
+    <div style="display:flex; justify-content:flex-end; margin-top:0.8rem; gap:8px;">
+        <button class="btn btn-primary" id="addCardBtnBottom" style="padding:0.1rem 1.5rem; font-size:0.7rem;">
+            + 新增卡牌
+        </button>
+    </div>
+    
     <!-- 底部 -->
     <div class="footer-bar">
         <span class="counter-badge" id="footerCounter">20 张卡牌 · 3 条规则</span>
@@ -2746,6 +2753,12 @@
             });
 
             addCardBtn.addEventListener('click', addCard);
+            
+                        // ===== 卡牌列表底部的新增按钮 =====
+            var addCardBtnBottom = document.getElementById('addCardBtnBottom');
+            if (addCardBtnBottom) {
+                addCardBtnBottom.addEventListener('click', addCard);
+            }
             addRuleBtn.addEventListener('click', addRule);
             resetExampleBtn.addEventListener('click', resetToExample);
             clearCardsBtn.addEventListener('click', clearCards);
