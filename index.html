@@ -930,10 +930,11 @@
         </div>
     </div>
 
-    <!-- 操作栏 -->
+        <!-- 操作栏 -->
     <div style="display:flex; justify-content:flex-end; gap:8px; margin-bottom:1.8rem; flex-wrap:wrap; align-items:center;">
         <span class="save-indicator" id="saveIndicator"><span style="font-size:0.5rem; color:#4a8a5a;">●</span> 已保存</span>
         <button class="btn btn-success" id="saveBtn">💾 保存</button>
+        <button class="btn btn-primary" id="syncGitBtn" style="background:#2d6b3a; border-color:#4a8f5a;">☁ 同步到GitHub</button>
         <button class="btn btn-outline-dark" id="resetExampleBtn">↺ 重置数据</button>
     </div>
 
@@ -2577,6 +2578,101 @@
             a.click();
             document.body.removeChild(a);
             URL.revokeObjectURL(url);
+                }
+
+        // ===== GitHub 同步配置 =====
+        // ⚠️ 重要：请将下面的 TOKEN 替换为您生成的 Personal Access Token
+        const GITHUB_TOKEN = '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'; // 替换为您的token
+        const GITHUB_REPO = 'Bludorrr/BlackJack';
+        const GITHUB_FILE_PATH = 'index.html';
+        const GITHUB_BRANCH = 'main';
+
+        async function syncToGitHub() {
+            // 检查是否配置了 token
+            if (GITHUB_TOKEN === 'ghp_xxxxxxxxxxxxxxxxxxxx') {
+                alert('请先在代码中配置 GitHub Token！\n1. 在 GitHub 生成 Personal Access Token\n2. 替换代码中的 GITHUB_TOKEN');
+                return;
+            }
+
+            if (!confirm('确定要将当前所有数据同步到 GitHub 吗？\n这将更新所有人的页面。')) return;
+
+            try {
+                saveIndicator.innerHTML = '<span style="font-size:0.5rem; color:#ffaa00;">●</span> 正在同步...';
+                saveIndicator.style.color = '#ffaa00';
+
+                saveToStorage();
+
+                const blocks = document.querySelectorAll('[data-block]');
+                const editableContent = {};
+                blocks.forEach(el => {
+                    const key = el.dataset.block;
+                    editableContent[key] = el.innerHTML;
+                });
+
+                const payload = {
+                    rules: rules,
+                    cards: cards,
+                    keywordLibrary: KEYWORD_LIBRARY,
+                    editableContent: editableContent,
+                    exportedAt: new Date().toISOString()
+                };
+
+                const fileUrl = `https://api.github.com/repos/${GITHUB_REPO}/contents/${GITHUB_FILE_PATH}`;
+                
+                const getResponse = await fetch(fileUrl, {
+                    headers: {
+                        'Authorization': `token ${GITHUB_TOKEN}`,
+                        'Accept': 'application/vnd.github.v3+json'
+                    }
+                });
+
+                if (!getResponse.ok) {
+                    throw new Error(`获取文件失败: ${getResponse.status}`);
+                }
+
+                const fileData = await getResponse.json();
+                const currentContent = atob(fileData.content);
+                const sha = fileData.sha;
+
+                const newJsonString = JSON.stringify(payload, null, 2);
+                const searchPattern = /const EMBEDDED_DATA = {[\s\S]*?};/;
+                const newContent = currentContent.replace(searchPattern, `const EMBEDDED_DATA = ${newJsonString};`);
+
+                const encodedContent = btoa(unescape(encodeURIComponent(newContent)));
+
+                const commitResponse = await fetch(fileUrl, {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': `token ${GITHUB_TOKEN}`,
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/vnd.github.v3+json'
+                    },
+                    body: JSON.stringify({
+                        message: `更新卡牌数据 - ${new Date().toLocaleString()}`,
+                        content: encodedContent,
+                        sha: sha,
+                        branch: GITHUB_BRANCH
+                    })
+                });
+
+                if (!commitResponse.ok) {
+                    throw new Error(`提交失败: ${commitResponse.status}`);
+                }
+
+                saveIndicator.innerHTML = '<span style="font-size:0.5rem; color:#4a8a5a;">●</span> ✅ 已同步到 GitHub！';
+                saveIndicator.style.color = '#4a8a5a';
+                saveIndicator.classList.add('saved');
+                alert('✅ 同步成功！\n页面将在1-2分钟后自动更新。');
+                setTimeout(() => {
+                    saveIndicator.innerHTML = '<span style="font-size:0.5rem; color:#4a8a5a;">●</span> 已保存';
+                }, 3000);
+
+            } catch (e) {
+                console.error('同步失败:', e);
+                saveIndicator.innerHTML = '<span style="font-size:0.5rem; color:#cc3333;">●</span> 同步失败';
+                saveIndicator.style.color = '#cc3333';
+                alert(`❌ 同步失败: ${e.message}\n请检查网络和Token权限。`);
+            }
         }
 
         // ===== 词条操作 =====
@@ -2805,6 +2901,12 @@
                     // 打开场地页面
                     window.open('field.html', '_blank');
                 });
+            }
+
+            // ===== 一键同步到GitHub =====
+            var syncGitBtn = document.getElementById('syncGitBtn');
+            if (syncGitBtn) {
+                syncGitBtn.addEventListener('click', syncToGitHub);
             }
         }
 
