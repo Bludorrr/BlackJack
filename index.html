@@ -931,11 +931,8 @@
         "use strict";
 
         // ===== GitHub 同步配置 =====
-        const GITHUB_TOKEN = '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';
         const GITHUB_REPO = 'Bludorrr/BlackJack';
-        const GITHUB_FILE_PATH = 'index.html';
-        const GITHUB_BRANCH = 'main';
-
+       
         // ===== 词条库 =====
         let KEYWORD_LIBRARY = {};
 
@@ -1629,16 +1626,18 @@
             URL.revokeObjectURL(url);
         }
 
-        // ===== 同步到GitHub =====
+                // ===== 触发 GitHub Actions 同步 =====
         async function syncToGitHub() {
             if (!confirm('确定要将当前所有数据同步到 GitHub 吗？\n这将更新所有人的页面。')) return;
 
             try {
-                saveIndicator.innerHTML = '<span style="font-size:0.5rem; color:#ffaa00;">●</span> 正在同步...';
+                saveIndicator.innerHTML = '<span style="font-size:0.5rem; color:#ffaa00;">●</span> 正在发送同步请求...';
                 saveIndicator.style.color = '#ffaa00';
 
+                // 保存到本地存储
                 saveToStorage();
 
+                // 收集所有数据
                 const blocks = document.querySelectorAll('[data-block]');
                 const editableContent = {};
                 blocks.forEach(el => {
@@ -1654,63 +1653,37 @@
                     exportedAt: new Date().toISOString()
                 };
 
-                const fileUrl = `https://api.github.com/repos/${GITHUB_REPO}/contents/${GITHUB_FILE_PATH}`;
-                
-                const getResponse = await fetch(fileUrl, {
+                // 触发 GitHub Actions（不需要 Token！）
+                const response = await fetch(`https://api.github.com/repos/${GITHUB_REPO}/dispatches`, {
+                    method: 'POST',
                     headers: {
-                        'Authorization': `token ${GITHUB_TOKEN}`,
-                        'Accept': 'application/vnd.github.v3+json'
-                    }
-                });
-
-                if (!getResponse.ok) {
-                    const errorText = await getResponse.text();
-                    throw new Error(`获取文件失败 (${getResponse.status}): ${errorText}`);
-                }
-
-                const fileData = await getResponse.json();
-                const currentContent = atob(fileData.content);
-                const sha = fileData.sha;
-
-                const newJsonString = JSON.stringify(payload, null, 2);
-                const searchPattern = /const EMBEDDED_DATA = \{[\s\S]*?\};/;
-                const newContent = currentContent.replace(searchPattern, `const EMBEDDED_DATA = ${newJsonString};`);
-
-                const encodedContent = btoa(unescape(encodeURIComponent(newContent)));
-
-                const commitResponse = await fetch(fileUrl, {
-                    method: 'PUT',
-                    headers: {
-                        'Authorization': `token ${GITHUB_TOKEN}`,
                         'Content-Type': 'application/json',
                         'Accept': 'application/vnd.github.v3+json'
                     },
                     body: JSON.stringify({
-                        message: `更新卡牌数据 - ${new Date().toLocaleString()}`,
-                        content: encodedContent,
-                        sha: sha,
-                        branch: GITHUB_BRANCH
+                        event_type: 'sync-data',
+                        client_payload: payload
                     })
                 });
 
-                if (!commitResponse.ok) {
-                    const errorText = await commitResponse.text();
-                    throw new Error(`提交失败 (${commitResponse.status}): ${errorText}`);
+                if (response.ok) {
+                    saveIndicator.innerHTML = '<span style="font-size:0.5rem; color:#4a8a5a;">●</span> ✅ 同步请求已发送！';
+                    saveIndicator.style.color = '#4a8a5a';
+                    saveIndicator.classList.add('saved');
+                    alert('✅ 同步请求已发送！\n页面将在1-2分钟后自动更新。');
+                    setTimeout(() => {
+                        saveIndicator.innerHTML = '<span style="font-size:0.5rem; color:#4a8a5a;">●</span> 已保存';
+                    }, 3000);
+                } else {
+                    const errorText = await response.text();
+                    throw new Error(`请求失败 (${response.status}): ${errorText}`);
                 }
-
-                saveIndicator.innerHTML = '<span style="font-size:0.5rem; color:#4a8a5a;">●</span> ✅ 已同步到 GitHub！';
-                saveIndicator.style.color = '#4a8a5a';
-                saveIndicator.classList.add('saved');
-                alert('✅ 同步成功！\n页面将在1-2分钟后自动更新。');
-                setTimeout(() => {
-                    saveIndicator.innerHTML = '<span style="font-size:0.5rem; color:#4a8a5a;">●</span> 已保存';
-                }, 3000);
 
             } catch (e) {
                 console.error('同步失败:', e);
                 saveIndicator.innerHTML = '<span style="font-size:0.5rem; color:#cc3333;">●</span> 同步失败';
                 saveIndicator.style.color = '#cc3333';
-                alert(`❌ 同步失败: ${e.message}`);
+                alert(`❌ 同步失败: ${e.message}\n\n请确保 GitHub Actions 已正确配置。`);
             }
         }
 
@@ -1914,10 +1887,11 @@
                 console.log('exportDataBtn 已绑定');
             }
 
-            // ===== 同步到GitHub按钮 =====
+                        // ===== 同步到GitHub按钮 =====
+            var syncGitBtn = document.getElementById('syncGitBtn');
             if (syncGitBtn) {
                 syncGitBtn.addEventListener('click', syncToGitHub);
-                console.log('syncGitBtn 已绑定');
+                console.log('syncGitBtn 已绑定（GitHub Actions）');
             } else {
                 console.warn('syncGitBtn 不存在');
             }
@@ -1935,7 +1909,7 @@
         }
 
         // ===== 初始化 =====
-        function init() {
+                function init() {
             console.log('init() 开始执行...');
 
             const embeddedLoaded = loadEmbeddedData();
