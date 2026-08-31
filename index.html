@@ -451,7 +451,300 @@ const DEFAULT_CARDS=[
 {id:'c5',name:'市民护卫',type:'平民',effect:'获得 3 点[护甲]，并恢复 2 点[生命值]。',flavor:'“守护家园，人人有责。”',keywords:['护甲','治疗']}
 ];
 
-const EMBEDDED_DATA={rules:[],cards:[],keywordLibrary:{},editableContent:{},exportedAt:new Date().toISOString()};
+const EMBEDDED_DATA={{
+  "rules": [
+    {
+      "id": "mtgq51y3s8kwf97m",
+      "title": "已公开/未公开",
+      "description": "统治者/干员入场时敌方不可见卡面；卡面敌方不可见称为未公开状态；技能或特质生效后变为敌方可见；卡面敌方可见称为公开状态；在你的行动阶段，你可以主动公开卡牌"
+    },
+    {
+      "id": "mtgq8wxzqf8rro13",
+      "title": "潜伏",
+      "description": "若此牌处于未公开状态且满足条件时，可执行该技能，该技能不消耗卡牌"
+    },
+    {
+      "id": "mtgqc4qq6n1j7gvd",
+      "title": "直面",
+      "description": "2张牌处于同区域内且站位相对"
+    }
+  ],
+  "cards": [
+    {
+      "id": "mtgolv65u94np4lv",
+      "name": "黑杰克",
+      "type": "干员",
+      "effect": "视为对1个对象执行<刺杀>",
+      "flavor": "“背景故事”",
+      "keywords": [
+        "蔑视",
+        "精准"
+      ]
+    },
+    {
+      "id": "mtgot817mkj5ikjj",
+      "name": "白杰克",
+      "type": "干员",
+      "effect": "此干员执行<斩首>时，可取消原效果，将此干员置于对象旁并对其施加[劫持]直至“白杰克”移动或死亡；当此干员为己方统治者时，获得1[帷幄]，跳过你之后的审判阶段，直至其死亡",
+      "flavor": "“背景故事”",
+      "keywords": [
+        "铁证"
+      ]
+    },
+    {
+      "id": "mtgpgqmtjxrgrhtv",
+      "name": "福尔摩斯",
+      "type": "干员",
+      "effect": "（潜伏）当敌方执行行动时，可公开此干员，视为其执行<识破>",
+      "flavor": "“背景故事”",
+      "keywords": []
+    },
+    {
+      "id": "mtgqewbjo7ratedt",
+      "name": "骑士",
+      "type": "干员",
+      "effect": "（潜伏）可公开此干员，视为其对直面干员执行<刺杀>",
+      "flavor": "“背景故事”",
+      "keywords": []
+    },
+    {
+      "id": "mtgqfr0i6x8j5be3",
+      "name": "清道夫",
+      "type": "干员",
+      "effect": "当敌方干员进入此干员所在区域时，可视为此干员对其执行<刺杀>",
+      "flavor": "“背景故事”",
+      "keywords": [
+        "笨重"
+      ]
+    },
+    {
+      "id": "mtgqgb5b5v7vqo2z",
+      "name": "稻草人",
+      "type": "干员",
+      "effect": "（潜伏）当敌方干员使此干员死亡时，你抽1张牌，并对其施加1[曝光]",
+      "flavor": "“背景故事”",
+      "keywords": [
+        "笨重"
+      ]
+    },
+    {
+      "id": "mtgqgsddd2x814zu",
+      "name": "刻耳柏洛斯",
+      "type": "干员",
+      "effect": "对同区域己方干员施加1[警戒]",
+      "flavor": "“背景故事”",
+      "keywords": []
+    },
+    {
+      "id": "mtgqh5d47n0v2k7r",
+      "name": "全视之眼",
+      "type": "干员",
+      "effect": "获得1[支持]1个回合，你的下个抽牌阶段多抽2张非平民牌，之后将手牌中2张非平民牌置于抽牌堆底",
+      "flavor": "“背景故事”",
+      "keywords": [
+        "扎根"
+      ]
+    },
+    {
+      "id": "mtgqh5zfqc83lamk",
+      "name": "上帝之手",
+      "type": "干员",
+      "effect": "选择1名干员，使其移动1次(不计入回合移动数)",
+      "flavor": "“背景故事”",
+      "keywords": []
+    },
+    {
+      "id": "mtgqvugfbi4k4v0j",
+      "name": "刺杀",
+      "type": "行动",
+      "effect": "干员执行，选择1个同区域对象令其死亡",
+      "flavor": "“背景故事”",
+      "keywords": []
+    },
+    {
+      "id": "mtgqwkxkdcw4aimo",
+      "name": "斩首",
+      "type": "行动",
+      "effect": "干员执行，令1名同区域统治者死亡",
+      "flavor": "“背景故事”",
+      "keywords": []
+    },
+    {
+      "id": "mtgqwmfn3540bcvh",
+      "name": "识破",
+      "type": "行动",
+      "effect": "干员执行，令1个行动失效",
+      "flavor": "“背景故事”",
+      "keywords": []
+    },
+    {
+      "id": "mtgqwmrdi2x6v79q",
+      "name": "饱和打击",
+      "type": "行动",
+      "effect": "选择1个区域，在你的下个回合开始阶段，令区域内所有干员死亡",
+      "flavor": "“背景故事”",
+      "keywords": []
+    },
+    {
+      "id": "mtgqwn92j150vw5h",
+      "name": "全境封锁",
+      "type": "行动",
+      "effect": "1个回合内，所有干员无法跨境",
+      "flavor": "“背景故事”",
+      "keywords": []
+    },
+    {
+      "id": "mtgqxva0zlfuwlhk",
+      "name": "战术转移",
+      "type": "行动",
+      "effect": "选择1名己方干员，将其置于己方其他空位",
+      "flavor": "“背景故事”",
+      "keywords": []
+    },
+    {
+      "id": "mtgqxw2zg710j7cy",
+      "name": "舆论",
+      "type": "行动",
+      "effect": "令1名干员获得1[暴露]，此行动无法被<识破>",
+      "flavor": "“背景故事”",
+      "keywords": []
+    },
+    {
+      "id": "mtgqyiglnch919oz",
+      "name": "平民",
+      "type": "平民",
+      "effect": "无效果",
+      "flavor": "“背景故事”",
+      "keywords": []
+    },
+    {
+      "id": "mtgr2xr8ovx5w0g3",
+      "name": "微笑小丑",
+      "type": "干员",
+      "effect": "无效果",
+      "flavor": "“背景故事”",
+      "keywords": [
+        "微笑"
+      ]
+    },
+    {
+      "id": "mtgratn0i3xqzt4d",
+      "name": "哭泣小丑",
+      "type": "干员",
+      "effect": "无效果",
+      "flavor": "“背景故事”",
+      "keywords": [
+        "哭泣"
+      ]
+    },
+    {
+      "id": "mtgri6huc086hkek",
+      "name": "崩溃",
+      "type": "行动",
+      "effect": "干员执行，令该区域政府弃置2张牌，否则对其施加[无政府状态]",
+      "flavor": "“背景故事”",
+      "keywords": []
+    },
+    {
+      "id": "mtgxmdjtta0voz63",
+      "name": "暴怒",
+      "type": "统治者",
+      "effect": "在场上时，你的所有干员获得[蔑视]",
+      "flavor": "“背景故事”",
+      "keywords": [
+        "微笑"
+      ]
+    },
+    {
+      "id": "mtgzavw7nkfe95y6",
+      "name": "平庸",
+      "type": "统治者",
+      "effect": "无效果",
+      "flavor": "“背景故事”",
+      "keywords": []
+    },
+    {
+      "id": "mtgzaxckr61nnhkw",
+      "name": "傲慢",
+      "type": "统治者",
+      "effect": "在场上时，你的<刺杀>可以视为<识破>",
+      "flavor": "“背景故事”",
+      "keywords": [
+        "哭泣"
+      ]
+    },
+    {
+      "id": "mtgzyjzmlgq3qulg",
+      "name": "贪婪",
+      "type": "统治者",
+      "effect": "在场上时，行动阶段限1次，你可以弃置1张牌，然后摸1张同类型牌；上述技能执行3次后，获得1[支持]；你的<饱和打击>与<全境封锁>失效，但可以弃置并摸1张牌",
+      "flavor": "“背景故事”",
+      "keywords": []
+    },
+    {
+      "id": "mth0a59030q24gd4",
+      "name": "懒惰",
+      "type": "统治者",
+      "effect": "在场上时，在你的抽牌阶段，若你上个自己的回合场上未执行行动且未移动，则多抽一张牌",
+      "flavor": "“背景故事”",
+      "keywords": []
+    },
+    {
+      "id": "mth1anm7iza158p1",
+      "name": "献祭",
+      "type": "行动",
+      "effect": "选择场上1名己方干员，使其死亡，然后你抽1张平民牌与1张非平民牌",
+      "flavor": "“背景故事”",
+      "keywords": []
+    },
+    {
+      "id": "mth6aubfere3xl4l",
+      "name": "1",
+      "type": "通用",
+      "effect": "描述卡牌效果……",
+      "flavor": "“背景故事”",
+      "keywords": []
+    }
+  ],
+  "keywordLibrary": {
+    "统治者": "统治者类型的卡牌，具有相应的战术定位。",
+    "干员": "干员类型的卡牌，具有相应的战术定位。",
+    "行动": "行动类型的卡牌，具有相应的战术定位。",
+    "平民": "平民类型的卡牌，通常具有辅助或防御能力。",
+    "蔑视": "无视[警戒]",
+    "精准": "执行<刺杀>不会失效",
+    "铁证": "执行<识破>不会失效，可对1个对象使用<识破>，对其施加1[暴露]",
+    "无政府状态": "使己方所有干员获得1[曝光]",
+    "曝光": "无法移动与执行",
+    "笨重": "无法移动",
+    "暴露": "无法执行",
+    "失联": "无法执行行动",
+    "力竭": "无法执行技能",
+    "扎根": "无法改变位置",
+    "劫持": "获得[支持]1直至施加者移动或死亡；施加者若为敌方，回合结束时需要将己方1张牌交于敌方；施加者若为己方，收到攻击时可转移给施加者；死亡时，施加者成为统治者",
+    "帷幄": "抽牌阶段多抽1张行动",
+    "警戒": "无法被行动指定或影响",
+    "支持": "抽牌阶段多抽1张行动",
+    "微笑": "可将<刺杀>视为<崩溃>执行",
+    "哭泣": "可将<刺杀>视为<崩溃>执行"
+  },
+  "editableContent": {
+    "intro": "\n                <p><strong>BlackJack</strong><b style=\"font-size: 0.9rem;\">是一款卡牌对战类游戏。</b></p><p><b><br></b></p><p><b>在这里，你将作为一个政府的幕后实权掌控者，利用各个统治者与干员的能力，规划行动，完美燃尽你手中的一切，目标是毁灭敌对政府，不管是以什么方式。</b></p><ul style=\"margin-top:8px;\">\n                </ul>\n            ",
+    "type-title-1": "统治者 (Ruler)",
+    "type-desc-1": "处于场上时为你的政府带来变化；己方区域存在己方干员时，统治者无法被&lt;刺杀&gt;；若你的场上没有统治者，你获得[无政府状态]；只有在你的场上没有统治者时，才可上任统治者",
+    "type-title-2": "干员 (Operator)",
+    "type-desc-2": "拥有主动技能或被动特质，执行技能需要消耗1张牌；在你的回合，每位干员仅可执行1次技能或移动",
+    "type-title-3": "行动 (Action)",
+    "type-desc-3": "可由你或干员执行的效果牌",
+    "type-title-4": "平民 (Civilian)",
+    "type-desc-4": "可视为没有任何效果的干员",
+    "process-title": "游戏开始：掷硬币先后手，双方统治者区随机入场1名统治者，并各抽3张非平民与2张平民，后手多抽1张非平民",
+    "process-desc": "\n                <ol style=\"list-style:none; padding-left:0.5rem;\">\n                    <li style=\"margin: 0px 0px 4px;\">开始阶段<div>抽牌阶段：抽取1张非平民和2张平民</div><div>行动阶段：可以派遣干员/上任统治者、移动干员、执行干员/统治者技能、执行行动</div><div>审判阶段：你可以判断敌方1名未公开干员的代号，若判断正确，使该干员公开并获得1[曝光]</div><div>结束阶段</div></li></ol><ul style=\"margin-top:8px;\">\n                </ul>\n            ",
+    "win-title": "主要 &amp; 特殊胜利",
+    "win-desc": "\n                <ul>\n                    <li>屠杀：敌方处于[无政府状态]且区域内没有其干员</li><li>掌控：己方“白杰克”成为敌方统治者</li><li>谢幕：己方“黑杰克”使7个对象死亡</li><li>嘉年华：敌方的结束阶段，其区域内存在3个或以上的[哭泣]和[微笑]</li>\n                </ul>\n            "
+  },
+  "exportedAt": "2026-08-31T13:56:44.726Z"
+}};
 
 let rules=[],cards=[],selectedKeywords=[],searchText='',editingCardId=null,editingRuleId=null;
 
