@@ -927,13 +927,68 @@
 </div>
 
 <script>
-    (function() {
+        (function() {
         "use strict";
 
-                // ===== GitHub 配置 =====
+        // ===== GitHub 配置 =====
         const GITHUB_REPO = 'Bludorrr/BlackJack';
-        const GITHUB_TOKEN = '这里粘贴您的新Token';  // 精细粒度 Token
-       
+        // 精细粒度 Token（只有 Actions 权限）
+        const GITHUB_TOKEN = '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';
+
+        // ===== 触发 GitHub Actions 同步 =====
+        async function syncToGitHub() {
+            if (!confirm('确定要将当前所有数据同步到 GitHub 吗？')) return;
+
+            try {
+                saveIndicator.innerHTML = '<span style="font-size:0.5rem; color:#ffaa00;">●</span> 正在同步...';
+                saveIndicator.style.color = '#ffaa00';
+
+                saveToStorage();
+
+                // 收集数据
+                const blocks = document.querySelectorAll('[data-block]');
+                const editableContent = {};
+                blocks.forEach(el => {
+                    const key = el.dataset.block;
+                    editableContent[key] = el.innerHTML;
+                });
+
+                const payload = {
+                    rules: rules,
+                    cards: cards,
+                    keywordLibrary: KEYWORD_LIBRARY,
+                    editableContent: editableContent,
+                    exportedAt: new Date().toISOString()
+                };
+
+                // 触发 GitHub Actions
+                const response = await fetch(`https://api.github.com/repos/${GITHUB_REPO}/dispatches`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `token ${GITHUB_TOKEN}`,
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/vnd.github.v3+json'
+                    },
+                    body: JSON.stringify({
+                        event_type: 'sync-data',
+                        client_payload: payload
+                    })
+                });
+
+                if (response.ok) {
+                    saveIndicator.innerHTML = '<span style="font-size:0.5rem; color:#4a8a5a;">●</span> ✅ 已发送！';
+                    alert('✅ 同步请求已发送！\n页面将在1-2分钟后自动更新。');
+                } else {
+                    throw new Error(`请求失败 (${response.status})`);
+                }
+
+            } catch (e) {
+                console.error('同步失败:', e);
+                saveIndicator.innerHTML = '<span style="font-size:0.5rem; color:#cc3333;">●</span> 同步失败';
+                alert(`❌ 同步失败: ${e.message}`);
+            }
+        }
+            
         // ===== 词条库 =====
         let KEYWORD_LIBRARY = {};
 
