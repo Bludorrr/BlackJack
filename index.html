@@ -2587,7 +2587,7 @@
         const GITHUB_FILE_PATH = 'index.html';
         const GITHUB_BRANCH = 'main';
 
-        async function syncToGitHub() {
+                async function syncToGitHub() {
             // 检查是否配置了 token
             if (GITHUB_TOKEN === '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') {
                 alert('请先在代码中配置 GitHub Token！\n1. 在 GitHub 生成 Personal Access Token\n2. 替换代码中的 GITHUB_TOKEN');
@@ -2600,8 +2600,10 @@
                 saveIndicator.innerHTML = '<span style="font-size:0.5rem; color:#ffaa00;">●</span> 正在同步...';
                 saveIndicator.style.color = '#ffaa00';
 
+                // 1. 先保存当前数据到本地存储
                 saveToStorage();
 
+                // 2. 收集所有数据
                 const blocks = document.querySelectorAll('[data-block]');
                 const editableContent = {};
                 blocks.forEach(el => {
@@ -2617,8 +2619,10 @@
                     exportedAt: new Date().toISOString()
                 };
 
+                // 3. 构建 API 请求 URL（注意：不再使用 ?access_token= 参数）
                 const fileUrl = `https://api.github.com/repos/${GITHUB_REPO}/contents/${GITHUB_FILE_PATH}`;
                 
+                // 4. 获取当前文件（使用 Authorization 请求头）
                 const getResponse = await fetch(fileUrl, {
                     headers: {
                         'Authorization': `token ${GITHUB_TOKEN}`,
@@ -2627,19 +2631,24 @@
                 });
 
                 if (!getResponse.ok) {
-                    throw new Error(`获取文件失败: ${getResponse.status}`);
+                    const errorText = await getResponse.text();
+                    throw new Error(`获取文件失败 (${getResponse.status}): ${errorText}`);
                 }
 
                 const fileData = await getResponse.json();
                 const currentContent = atob(fileData.content);
                 const sha = fileData.sha;
 
+                // 5. 替换 EMBEDDED_DATA
                 const newJsonString = JSON.stringify(payload, null, 2);
+                // 更健壮的正则表达式，匹配整个 EMBEDDED_DATA 对象
                 const searchPattern = /const EMBEDDED_DATA = {[\s\S]*?};/;
                 const newContent = currentContent.replace(searchPattern, `const EMBEDDED_DATA = ${newJsonString};`);
 
+                // 6. 编码为 base64
                 const encodedContent = btoa(unescape(encodeURIComponent(newContent)));
 
+                // 7. 提交到 GitHub（使用 Authorization 请求头）
                 const commitResponse = await fetch(fileUrl, {
                     method: 'PUT',
                     headers: {
@@ -2656,9 +2665,11 @@
                 });
 
                 if (!commitResponse.ok) {
-                    throw new Error(`提交失败: ${commitResponse.status}`);
+                    const errorText = await commitResponse.text();
+                    throw new Error(`提交失败 (${commitResponse.status}): ${errorText}`);
                 }
 
+                // 8. 成功
                 saveIndicator.innerHTML = '<span style="font-size:0.5rem; color:#4a8a5a;">●</span> ✅ 已同步到 GitHub！';
                 saveIndicator.style.color = '#4a8a5a';
                 saveIndicator.classList.add('saved');
@@ -2671,7 +2682,7 @@
                 console.error('同步失败:', e);
                 saveIndicator.innerHTML = '<span style="font-size:0.5rem; color:#cc3333;">●</span> 同步失败';
                 saveIndicator.style.color = '#cc3333';
-                alert(`❌ 同步失败: ${e.message}\n请检查网络和Token权限。`);
+                alert(`❌ 同步失败: ${e.message}`);
             }
         }
 
