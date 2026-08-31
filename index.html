@@ -2580,12 +2580,16 @@
             URL.revokeObjectURL(url);
                 }
 
-        // ===== GitHub 同步配置 =====
-        // ⚠️ 重要：请将下面的 TOKEN 替换为您生成的 Personal Access Token
-        const GITHUB_TOKEN = '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'; // 替换为您的token
+            (function() {
+        "use strict";
+
+        // ===== GitHub 同步配置（全局） =====
+        const GITHUB_TOKEN = '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';
         const GITHUB_REPO = 'Bludorrr/BlackJack';
         const GITHUB_FILE_PATH = 'index.html';
         const GITHUB_BRANCH = 'main';
+
+        // ... 其他代码 ...
 
                         async function syncToGitHub() {
             if (!confirm('确定要将当前所有数据同步到 GitHub 吗？\n这将更新所有人的页面。')) return;
