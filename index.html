@@ -461,12 +461,17 @@ const EMBEDDED_DATA={
     {
       "id": "mtgq8wxzqf8rro13",
       "title": "潜伏",
-      "description": "若此牌处于未公开状态且满足条件时，可执行该技能，该技能不消耗卡牌"
+      "description": "若此牌处于未公开状态且满足条件时，可执行该技能"
     },
     {
       "id": "mtgqc4qq6n1j7gvd",
       "title": "直面",
       "description": "2张牌处于同区域内且站位相对"
+    },
+    {
+      "id": "mto7fy18sx2dcpvl",
+      "title": "阶段",
+      "description": "每次执行按顺序依次产生技能效果，所有效果仅能执行1次"
     }
   ],
   "cards": [
@@ -474,7 +479,7 @@ const EMBEDDED_DATA={
       "id": "mtgolv65u94np4lv",
       "name": "黑杰克",
       "type": "干员",
-      "effect": "视为对1个对象执行<刺杀>",
+      "effect": "🔺视为对1个对象执行<刺杀>",
       "flavor": "“背景故事”",
       "keywords": [
         "蔑视",
@@ -485,7 +490,7 @@ const EMBEDDED_DATA={
       "id": "mtgot817mkj5ikjj",
       "name": "白杰克",
       "type": "干员",
-      "effect": "此干员执行<斩首>时，可取消原效果，将此干员置于对象旁并对其施加[劫持]直至“白杰克”移动或死亡；当此干员为己方统治者时，获得1[帷幄]，跳过你之后的审判阶段，直至其死亡",
+      "effect": "🔺此干员执行<斩首>时，可取消原效果，将此干员置于对象旁并对其施加[劫持]直至“白杰克”移动或死亡\n/////🔺当此干员为己方统治者时，获得1[帷幄]，跳过你之后的审判阶段，直至其死亡",
       "flavor": "“背景故事”",
       "keywords": [
         "铁证"
@@ -511,10 +516,10 @@ const EMBEDDED_DATA={
       "id": "mtgqfr0i6x8j5be3",
       "name": "清道夫",
       "type": "干员",
-      "effect": "当敌方干员进入此干员所在区域时，可视为此干员对其执行<刺杀>",
+      "effect": "🔺当敌方干员进入此干员所在区域时，可视为此干员对其执行<刺杀>",
       "flavor": "“背景故事”",
       "keywords": [
-        "笨重"
+        "扎根"
       ]
     },
     {
@@ -531,7 +536,7 @@ const EMBEDDED_DATA={
       "id": "mtgqgsddd2x814zu",
       "name": "刻耳柏洛斯",
       "type": "干员",
-      "effect": "对同区域己方干员施加1[警戒]",
+      "effect": "🔺对同区域己方干员施加1[警戒]",
       "flavor": "“背景故事”",
       "keywords": []
     },
@@ -539,7 +544,7 @@ const EMBEDDED_DATA={
       "id": "mtgqh5d47n0v2k7r",
       "name": "全视之眼",
       "type": "干员",
-      "effect": "获得1[支持]1个回合，你的下个抽牌阶段多抽2张非平民牌，之后将手牌中2张非平民牌置于抽牌堆底",
+      "effect": "（在场）你的每个抽牌阶段，多抽1张非平民牌，然后将1张非平民牌置于牌堆顶或牌堆底",
       "flavor": "“背景故事”",
       "keywords": [
         "扎根"
@@ -549,7 +554,7 @@ const EMBEDDED_DATA={
       "id": "mtgqh5zfqc83lamk",
       "name": "上帝之手",
       "type": "干员",
-      "effect": "选择1名干员，使其移动1次(不计入回合移动数)",
+      "effect": "🔺选择1名干员，使其移动1次(不计入回合移动数)",
       "flavor": "“背景故事”",
       "keywords": []
     },
@@ -677,7 +682,7 @@ const EMBEDDED_DATA={
       "id": "mtgzyjzmlgq3qulg",
       "name": "贪婪",
       "type": "统治者",
-      "effect": "在场上时，行动阶段限1次，你可以弃置1张牌，然后摸1张同类型牌；上述技能执行3次后，获得1[支持]；你的<饱和打击>与<全境封锁>失效，但可以弃置并摸1张牌",
+      "effect": "在场上时，行动阶段限1次，你可以弃置1张牌，然后摸1张同类型牌；上述技能执行3次后，获得[支持]/////你的<饱和打击>与<全境封锁>失效，但可以弃置并摸1张牌",
       "flavor": "“背景故事”",
       "keywords": []
     },
@@ -691,7 +696,7 @@ const EMBEDDED_DATA={
     },
     {
       "id": "mth1anm7iza158p1",
-      "name": "献祭",
+      "name": "牺牲",
       "type": "行动",
       "effect": "选择场上1名己方干员，使其死亡，然后你抽1张平民牌与1张非平民牌",
       "flavor": "“背景故事”",
@@ -699,11 +704,139 @@ const EMBEDDED_DATA={
     },
     {
       "id": "mth6aubfere3xl4l",
-      "name": "1",
-      "type": "通用",
-      "effect": "描述卡牌效果……",
+      "name": "害羞的人",
+      "type": "干员",
+      "effect": "（潜伏）被1个单位指定时，视为对其执行<刺杀>，获得[狂怒]",
       "flavor": "“背景故事”",
       "keywords": []
+    },
+    {
+      "id": "mto725teij2htvdv",
+      "name": "余烬",
+      "type": "干员",
+      "effect": "（亡语）可视为对同区域1个单位执行<刺杀>",
+      "flavor": "“背景故事”",
+      "keywords": []
+    },
+    {
+      "id": "mto73j4orcr708q3",
+      "name": "这里没有马戏团",
+      "type": "干员",
+      "effect": "（在场）场上有已公开“小丑”时，获得[支持]/////🔺🔺将该干员置于己方其他空位",
+      "flavor": "“背景故事”",
+      "keywords": [
+        "哭泣",
+        "微笑",
+        "笨重"
+      ]
+    },
+    {
+      "id": "mto74nkryovbpspi",
+      "name": "驱逐",
+      "type": "行动",
+      "effect": "选择你区域内1名敌方干员，令其回到敌方手牌",
+      "flavor": "“背景故事”",
+      "keywords": []
+    },
+    {
+      "id": "mto753ofig7l238s",
+      "name": "背靠背",
+      "type": "干员",
+      "effect": "🔺（潜伏）处于敌方区域时，令同一列我方区域的敌方干员死亡",
+      "flavor": "“背景故事”",
+      "keywords": []
+    },
+    {
+      "id": "mto75dcpkcn9qdr6",
+      "name": "疫医",
+      "type": "干员",
+      "effect": "🔺选择1名本回合执行过技能的干员，使其本回合能够再次执行技能/////🔺当1名干员被施加效果时，令此效果失效",
+      "flavor": "“背景故事”",
+      "keywords": [
+        "羸弱"
+      ]
+    },
+    {
+      "id": "mto78koqd68mehl1",
+      "name": "石像鬼",
+      "type": "干员",
+      "effect": "🔺区域内有干员执行<刺杀>时，令其失效",
+      "flavor": "“背景故事”",
+      "keywords": [
+        "笨重"
+      ]
+    },
+    {
+      "id": "mto79c1usc8otst0",
+      "name": "木马",
+      "type": "通用",
+      "effect": "🔺对同区域其他干员施加1[羸弱]",
+      "flavor": "“背景故事”",
+      "keywords": [
+        "羸弱"
+      ]
+    },
+    {
+      "id": "mto79zhzdv90qx0o",
+      "name": "黑死病",
+      "type": "干员",
+      "effect": "🔺对同区域所有干员施加1[笨重]，若其中存在“平民”，令其死亡",
+      "flavor": "“背景故事”",
+      "keywords": [
+        "羸弱"
+      ]
+    },
+    {
+      "id": "mto7agldah420k25",
+      "name": "突发新闻",
+      "type": "干员",
+      "effect": "（入场）本回合令区域内[警戒]失效",
+      "flavor": "“背景故事”",
+      "keywords": [
+        "扎根",
+        "空降"
+      ]
+    },
+    {
+      "id": "mto7cciliyhgyano",
+      "name": "微笑屋",
+      "type": "干员",
+      "effect": "🔺区域内有敌方干员被施加效果时，令其获得[羸弱]",
+      "flavor": "“背景故事”",
+      "keywords": [
+        "微笑"
+      ]
+    },
+    {
+      "id": "mto7cpekdorqp4w7",
+      "name": "丧钟",
+      "type": "干员",
+      "effect": "🔺选择1名同区域干员，你的下个行动阶段，若其没有离开该区域，其死亡",
+      "flavor": "“背景故事”",
+      "keywords": [
+        "哭泣",
+        "笨重"
+      ]
+    },
+    {
+      "id": "mto7d5a85aj8dt7g",
+      "name": "警笛头",
+      "type": "干员",
+      "effect": "🔺（阶段）使自身所有词条失效/获得[精准]/执行<刺杀>可在全场选择对象",
+      "flavor": "“背景故事”",
+      "keywords": [
+        "羸弱"
+      ]
+    },
+    {
+      "id": "mto7dphsrveffg4n",
+      "name": "铁处女",
+      "type": "干员",
+      "effect": "🔺（限制）选择同区域1名干员，使其隐匿，（在场）其词条失效且无法公开",
+      "flavor": "“背景故事”",
+      "keywords": [
+        "笨重"
+      ]
     }
   ],
   "keywordLibrary": {
@@ -718,7 +851,6 @@ const EMBEDDED_DATA={
     "曝光": "无法移动与执行",
     "笨重": "无法移动",
     "暴露": "无法执行",
-    "失联": "无法执行行动",
     "力竭": "无法执行技能",
     "扎根": "无法改变位置",
     "劫持": "获得[支持]1直至施加者移动或死亡；施加者若为敌方，回合结束时需要将己方1张牌交于敌方；施加者若为己方，收到攻击时可转移给施加者；死亡时，施加者成为统治者",
@@ -726,7 +858,10 @@ const EMBEDDED_DATA={
     "警戒": "无法被行动指定或影响",
     "支持": "抽牌阶段多抽1张行动",
     "微笑": "可将<刺杀>视为<崩溃>执行",
-    "哭泣": "可将<刺杀>视为<崩溃>执行"
+    "哭泣": "可将<刺杀>视为<崩溃>执行",
+    "羸弱": "无法执行行动",
+    "狂怒": "回合第1次执行技能或移动不计入回合次数",
+    "空降": "入场时可置于我方任意空位"
   },
   "editableContent": {
     "intro": "\n                <p><strong>BlackJack</strong><b style=\"font-size: 0.9rem;\">是一款卡牌对战类游戏。</b></p><p><b><br></b></p><p><b>在这里，你将作为一个政府的幕后实权掌控者，利用各个统治者与干员的能力，规划行动，完美燃尽你手中的一切，目标是毁灭敌对政府，不管是以什么方式。</b></p><ul style=\"margin-top:8px;\">\n                </ul>\n            ",
@@ -739,11 +874,11 @@ const EMBEDDED_DATA={
     "type-title-4": "平民 (Civilian)",
     "type-desc-4": "可视为没有任何效果的干员",
     "process-title": "游戏开始：掷硬币先后手，双方统治者区随机入场1名统治者，并各抽3张非平民与2张平民，后手多抽1张非平民",
-    "process-desc": "\n                <ol style=\"list-style:none; padding-left:0.5rem;\">\n                    <li style=\"margin: 0px 0px 4px;\">开始阶段<div>抽牌阶段：抽取1张非平民和2张平民</div><div>行动阶段：可以派遣干员/上任统治者、移动干员、执行干员/统治者技能、执行行动</div><div>审判阶段：你可以判断敌方1名未公开干员的代号，若判断正确，使该干员公开并获得1[曝光]</div><div>结束阶段</div></li></ol><ul style=\"margin-top:8px;\">\n                </ul>\n            ",
+    "process-desc": "\n                <ol style=\"list-style:none; padding-left:0.5rem;\">\n                    <li style=\"margin: 0px 0px 4px;\">开始阶段<div>抽牌阶段：抽取1张非平民和2张平民</div><div>行动阶段：可以派遣干员/上任统治者、移动干员、执行干员/统治者技能、执行行动</div><div>结束阶段</div></li></ol><ul style=\"margin-top:8px;\">\n                </ul>\n            ",
     "win-title": "主要 &amp; 特殊胜利",
-    "win-desc": "\n                <ul>\n                    <li>屠杀：敌方处于[无政府状态]且区域内没有其干员</li><li>掌控：己方“白杰克”成为敌方统治者</li><li>谢幕：己方“黑杰克”使7个对象死亡</li><li>嘉年华：敌方的结束阶段，其区域内存在3个或以上的[哭泣]和[微笑]</li>\n                </ul>\n            "
+    "win-desc": "\n                <ul>\n                    <li>屠杀：敌方处于[无政府状态]且区域内没有其干员</li><li>掌控：己方“白杰克”成为敌方统治者</li><li>谢幕：己方“黑杰克”使7个对象死亡</li><li>嘉年华：敌方的结束阶段，其区域内存在4个或以上的[哭泣]和[微笑]</li>\n                </ul>\n            "
   },
-  "exportedAt": "2026-08-31T13:56:44.726Z"
+  "exportedAt": "2026-09-05T10:43:47.475Z"
 };
 
 let rules=[],cards=[],selectedKeywords=[],searchText='',editingCardId=null,editingRuleId=null;
